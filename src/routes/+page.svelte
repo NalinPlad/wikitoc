@@ -33,8 +33,8 @@
 <h1><code>wiki<u>toc</u></code></h1>
 <h3>Guess Countries based on their Wikipedia Table Of Contents</h3>
 <hr/>
-<i>Click PLAY to start. To play along with a friend tell them this <u>seed: {seed}</u>. Or enter your friend's seed below:</i>
+<i>Click PLAY to start. To play along with a friend tell them this <u>seed: {seed}</u>. Or enter your friend's seed:</i>
 <input type="text" bind:value={friendSeed} placeholder="Enter friend's seed" />
 <button on:click={updateSeed}>Set Seed</button>
 
-<StartGame />
+<StartGame bind:seed={seed}/>

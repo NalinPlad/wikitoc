@@ -1,4 +1,11 @@
-<input type="button" value="START"/>
+<script>
+    export let seed;
+    function start() {
+        window.location.href = '/play/' + seed;
+    }
+</script>
+
+<input type="button" value="START" on:click={start}/>
 
 <style>
     input {
