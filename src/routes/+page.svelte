@@ -221,7 +221,8 @@
         fake_html.innerHTML = JSON.stringify(resp.parse.text["*"])
             .replaceAll("\\n", "")
             .replaceAll(`\\"`, `"`)
-            .replaceAll(country,censor_text);
+            .replaceAll(country,censor_text)
+            .replaceAll(country.slice(0,3),censor_text);
 
         // fake_html.querySelectorAll("*").forEach(el => {
         //     if(el.innerHTML.includes(country)) {
@@ -235,6 +236,14 @@
                 // this image contains the name of the country, replace with the temp
                 img.src='/illegal_image.png'
                 img.srcset=''
+                img.style.color="black"
+            }
+        })
+
+        fake_html.querySelectorAll("a").forEach(a => {
+            if(a.innerText.includes(censor_text.slice(0,1))) {
+                // this image contains the name of the country, replace with the temp
+                a.style.color="black"
             }
         })
 
