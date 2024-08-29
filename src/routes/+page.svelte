@@ -234,7 +234,15 @@
     let url = data[country];
 
     onMount(async () => {
-        let resp = await fetch(url)
+        const url_2 =`https://en.wikipedia.org/w/api.php?action=parse&page=${url.replace("https://en.wikipedia.org/wiki/", "")}&prop=text&format=json&formatversion=1&origin=*`
+        console.log(url_2)
+        let resp = await (await fetch(url_2)).json()
+
+        const fakewk = document.createElement( 'html' );
+        fakewk.innerHTML = JSON.stringify(resp.parse.text["*"]).replaceAll(`\\"`, `"`).replaceAll("\n", "<br/>").replaceAll(country, "XXXXX");
+
+        document.body.appendChild(fakewk)
+        console.log(fakewk.getElementsByClassName("toc"))
     })
 
     console.log(country + " " + url)
