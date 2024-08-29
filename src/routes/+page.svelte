@@ -1,35 +1,6 @@
 <script>
   import { onMount } from "svelte";
 
-    // import CategoryButton from '$lib/CategoryButton.svelte';
-    // import StartGame from '../lib/StartGame.svelte';
-    // import { onDestroy, onMount } from 'svelte';
-    // import { SeedStore } from '../stores.js';
-
-    // let seed;
-    // let friendSeed = '';
-
-    // // Subscribe to SeedStore to get the current seed value
-    // const unsubscribe = SeedStore.subscribe(value => {
-    //     seed = value;
-    // });
-
-    // onDestroy(() => {
-    //     unsubscribe();
-    // });
-
-    // onMount(() => {
-    //     // Generate a new seed if the current one is null
-    //     if (seed === null) {
-    //         const ns = "xxxxx".split('').map(() => Math.floor(Math.random() * 10));
-    //         SeedStore.set(ns.join(''));
-    //     }
-    // });
-
-    // // Update the seed in the store if the friendSeed input is changed
-    // function updateSeed() {
-    //     SeedStore.set(friendSeed);
-    // }
     const data = {
     "Afghanistan": "https://en.wikipedia.org/wiki/History_of_Afghanistan",
     "Albania": "https://en.wikipedia.org/wiki/History_of_Albania",
@@ -244,11 +215,14 @@
         console.log(url_2)
         let resp = await (await fetch(url_2)).json()
 
-        const fakewk = document.createElement( 'html' );
-        fakewk.innerHTML = JSON.stringify(resp.parse.text["*"]).replaceAll(`\\"`, `"`).replaceAll("\n", "dhweudhewid<br/>").replaceAll(country, "XXXXX");
+        const fake_html = document.createElement( 'html' );
+        fake_html.innerHTML = JSON.stringify(resp.parse.text["*"])
+            .replaceAll("\\n", "")
+            .replaceAll(`\\"`, `"`)
+            .replaceAll(country, "XXXXX");
 
-        document.body.appendChild(fakewk)
-        console.log(fakewk.getElementsByClassName("toc"))
+        document.body.appendChild(fake_html)
+        console.log(fake_html.getElementsByClassName("toc"))
     })
 
     console.log(country + " " + url)
@@ -259,11 +233,16 @@
     <link rel="stylesheet" href="https://en.wikipedia.org/w/load.php?lang=en&modules=site.styles&only=styles&skin=vector">
 </svelte:head>
 
-<div>
+<div class="WTRC_rootdiv">
     <b><code>wiki<u>toc</u></code></b> — Guess Countries based on their Wikipedia Table Of Contents
 </div>
 
 <hr/>
 
-
+<style>
+    .WTRC_rootdiv {
+        padding: 1rem;
+        overflow-y: hidden;
+    }
+</style>
 
