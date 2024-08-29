@@ -46,7 +46,7 @@ def get_country_wikipedia_links(countries):
     country_links = {}
 
     for country in countries:
-        page = wiki_wiki.page(country)
+        page = wiki_wiki.page("History of "+country)
         if page.exists():
             country_links[country] = page.fullurl
         else:
@@ -54,7 +54,7 @@ def get_country_wikipedia_links(countries):
 
     return country_links
 
-def save_to_json(data, filename='countries_wikipedia_links.json'):
+def save_to_json(data, filename='countries.json'):
     with open(filename, 'w') as json_file:
         json.dump(data, json_file, indent=4)
 
