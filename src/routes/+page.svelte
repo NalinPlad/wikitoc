@@ -255,7 +255,7 @@
         "banned_words": ["Gambia", "Gambian"]
     },
     "Georgia": {
-        "url": "https://en.wikipedia.org/wiki/Georgia",
+        "url": "https://en.wikipedia.org/wiki/Georgia_(country)",
         "banned_words": ["Georgia", "Georgian"]
     },
     "Germany": {
@@ -798,6 +798,7 @@
             .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
             .replaceAll("\\n", "")
             .replaceAll(`\\"`, `"`)
+            .replaceAll("Republic of ", censor_text)
 
         data[country].banned_words.forEach(word => {
             html_string = html_string.replaceAll(word, censor_text)
@@ -813,7 +814,16 @@
 
 
         fake_html.querySelectorAll("img").forEach(img => {
-            if(img.src.includes("█") || img.srcset.includes("█") || img.src.includes("orthographic") || img.src.includes("flag")) {
+            if(
+                img.src.includes("█") || 
+                img.srcset.includes("█") || 
+
+                img.src.includes("orthographic") || 
+                img.srcset.includes("orthographic") || 
+                
+                img.src.includes("flag") ||
+                img.srcset.includes("flag")
+            ) {
                 // this image contains the name of the country, replace with the temp
                 img.src='/illegal_image.png'
                 img.srcset=''
@@ -830,6 +840,10 @@
             }
         })
 
+        fake_html.querySelectorAll("[role=note]").forEach(note => {
+            note.parentElement.removeChild(note)
+        })
+
         document.body.appendChild(fake_html)
         console.log(fake_html.getElementsByClassName("toc"))
     })
@@ -843,7 +857,7 @@
 </svelte:head>
 
 <div class="WTRC_rootdiv">
-    <b><code>wiki<u>toc</u></code></b> — Guess Countries based on their Wikipedia Table Of Contents
+    <b><code>wiki<u>toc</u></code></b> — Guess Countries based on their Wikipedia, but the name is censored
 </div>
 
 <hr/>
