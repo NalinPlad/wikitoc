@@ -144,7 +144,7 @@
     },
     "China": {
         "url": "https://en.wikipedia.org/wiki/China",
-        "banned_words": ["China", "Chinese"]
+        "banned_words": ["China", "Chinese", "People's Republic of", "CCP"]
     },
     "Colombia": {
         "url": "https://en.wikipedia.org/wiki/Colombia",
@@ -795,6 +795,7 @@
 
         const fake_html = document.createElement( 'html' );
         let html_string = JSON.stringify(resp.parse.text["*"])
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
             .replaceAll("\\n", "")
             .replaceAll(`\\"`, `"`)
 
@@ -812,12 +813,14 @@
 
 
         fake_html.querySelectorAll("img").forEach(img => {
-            if(img.src.includes("█") || img.srcset.includes("█")) {
+            if(img.src.includes("█") || img.srcset.includes("█") || img.src.includes("orthographic") || img.src.includes("flag")) {
                 // this image contains the name of the country, replace with the temp
                 img.src='/illegal_image.png'
                 img.srcset=''
                 img.style.color="black"
             }
+
+            ["A"]
         })
 
         fake_html.querySelectorAll("a").forEach(a => {
