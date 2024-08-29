@@ -12,7 +12,7 @@ def get_wikipedia_countries():
         "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil",
         "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
         "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China",
-        "Colombia", "Comoros", "Congo", "Congo, Democratic Republic of the", "Costa Rica",
+        "Colombia", "Comoros", "Congo", "Democratic Republic of the Congo", "Costa Rica",
         "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti",
         "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador",
         "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji",
@@ -20,7 +20,7 @@ def get_wikipedia_countries():
         "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti",
         "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland",
         "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya",
-        "Kiribati", "Korea, North", "Korea, South", "Kosovo", "Kuwait", "Kyrgyzstan",
+        "Kiribati", "North Korea", "South Korea", "Kosovo", "Kuwait", "Kyrgyzstan",
         "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein",
         "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives",
         "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico",
@@ -46,11 +46,12 @@ def get_country_wikipedia_links(countries):
     country_links = {}
 
     for country in countries:
-        page = wiki_wiki.page("History of "+country)
+        page = wiki_wiki.page(country)
         if page.exists():
             country_links[country] = page.fullurl
         else:
-            country_links[country] = "Page not found"
+            print("DIDNT FIND "+country)
+            # country_links[country] = "Page not found"
 
     return country_links
 
