@@ -234,12 +234,18 @@
     let url = data[country];
 
     onMount(async () => {
-        const url_2 =`https://en.wikipedia.org/w/api.php?action=parse&page=${url.replace("https://en.wikipedia.org/wiki/", "")}&prop=text&format=json&formatversion=1&origin=*`
+        const url_2 =`https://en.wikipedia.org/w/api.php?
+            action=parse&
+            page=${url.replace("https://en.wikipedia.org/wiki/", "")}&
+            redirects=1&disableeditsection=true&
+            format=json&origin=*&
+            prop=text&
+            useskin=vector`
         console.log(url_2)
         let resp = await (await fetch(url_2)).json()
 
         const fakewk = document.createElement( 'html' );
-        fakewk.innerHTML = JSON.stringify(resp.parse.text["*"]).replaceAll(`\\"`, `"`).replaceAll("\n", "<br/>").replaceAll(country, "XXXXX");
+        fakewk.innerHTML = JSON.stringify(resp.parse.text["*"]).replaceAll(`\\"`, `"`).replaceAll("\n", "dhweudhewid<br/>").replaceAll(country, "XXXXX");
 
         document.body.appendChild(fakewk)
         console.log(fakewk.getElementsByClassName("toc"))
@@ -247,6 +253,11 @@
 
     console.log(country + " " + url)
 </script>
+
+<svelte:head>
+    <link rel="stylesheet" href="https://en.wikipedia.org/w/load.php?lang=en&modules=codex-search-styles%7Cext.cite.styles%7Cext.discussionTools.init.styles%7Cext.echo.styles.badge%7Cext.pygments%2CwikimediaBadges%7Cext.uls.interlanguage%7Cext.visualEditor.desktopArticleTarget.noscript%7Cjquery.makeCollapsible.styles%7Cjquery.tablesorter.styles%7Cmediawiki.widgets.styles%7Coojs-ui-core.icons%2Cstyles%7Coojs-ui.styles.icons-alerts%2Cindicators%7Cskins.vector.styles.legacy%7Cwikibase.client.init&only=styles&skin=vector">
+    <link rel="stylesheet" href="https://en.wikipedia.org/w/load.php?lang=en&modules=site.styles&only=styles&skin=vector">
+</svelte:head>
 
 <div>
     <b><code>wiki<u>toc</u></code></b> — Guess Countries based on their Wikipedia Table Of Contents
